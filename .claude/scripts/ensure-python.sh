@@ -9,10 +9,11 @@ MIN_MINOR=8
 
 CYAN='\033[36m'; GREEN='\033[32m'; YELLOW='\033[33m'; RED='\033[31m'; RESET='\033[0m'
 
-log()  { printf '%b\n' "${CYAN}[python]${RESET} $*"; }
-ok()   { printf '%b\n' "${GREEN}[python]${RESET} $*"; }
-warn() { printf '%b\n' "${YELLOW}[python]${RESET} $*"; }
-fail() { printf '%b\n' "${RED}[python]${RESET} $*"; exit 1; }
+# All logging goes to stderr so stdout is clean for the command name
+log()  { printf '%b\n' "${CYAN}[python]${RESET} $*" >&2; }
+ok()   { printf '%b\n' "${GREEN}[python]${RESET} $*" >&2; }
+warn() { printf '%b\n' "${YELLOW}[python]${RESET} $*" >&2; }
+fail() { printf '%b\n' "${RED}[python]${RESET} $*" >&2; exit 1; }
 
 version_ok() {
     local cmd="$1"
