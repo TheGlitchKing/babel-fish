@@ -3,4 +3,4 @@
 
 | Name | Command | Source |
 |------|---------|--------|
-| _(no tools detected)_ | | |
+| `/babel-fish-developer-skill` | `/babel-fish-developer-skill` | skills |

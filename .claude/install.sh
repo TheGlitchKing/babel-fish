@@ -17,6 +17,124 @@
 
 set -euo pipefail
 
+# ── Help ──────────────────────────────────────────────────────────────────────
+if [[ "${1:-}" == "--help" || "${1:-}" == "-h" ]]; then
+    cat <<'HELP'
+
+  ╔══════════════════════════════════════════════════════════════════╗
+  ║              Codebase Mapper Plugin — Help                       ║
+  ╚══════════════════════════════════════════════════════════════════╝
+
+WHAT IT DOES
+  Builds a self-updating developer context system for your repo:
+  - Project map split into 19 focused sections (routes, models, infra, etc.)
+  - Vocabulary translator: maps plain English to exact file paths
+  - Developer skill auto-loaded in every Claude Code session
+  - Operational runbook for gotchas and deploy procedures
+  - Pre-commit hook that keeps the map current automatically
+  - Iterative quality grading (0-100%) with a 90% pass threshold
+
+REQUIREMENTS
+  - Claude Code >= 1.0.0
+  - Python >= 3.8  (auto-installed if missing)
+  - bash
+  - Optional: pip install pyyaml  (for docker-compose parsing)
+
+INSTALLATION
+  Run this from your project root:
+
+    bash .claude/install.sh
+
+  Or with an explicit project root:
+
+    bash .claude/install.sh /path/to/your/project
+
+  Via the Claude Marketplace:
+
+    /plugin install TheGlitchKing/codebase-mapper
+
+WHAT HAPPENS ON INSTALL
+  1. Python >= 3.8 is checked and installed if missing
+  2. Stack is detected (language, framework, DB, ORM, auth, infra)
+  3. generate.py runs to build the 19-section project map
+  4. grader.py scores the output 0-100% across 7 categories
+  5. If score < 90%, it retries up to 3 times automatically
+  6. Skills and rules files are rendered from templates
+  7. Pre-commit git hook is installed
+  8. CLAUDE.md is updated with a project map pointer
+  9. A final quality report is written to:
+       .claude/project-map/reports/install-report.md
+
+POST-INSTALL COMMANDS
+  Regenerate the map (forced):
+    python .claude/project-map/generate.py --force
+
+  Regenerate only if files changed (fast, used by pre-commit):
+    python .claude/project-map/generate.py
+
+  Re-grade the current map output:
+    python .claude/project-map/grader.py
+
+  Mine past Claude Code sessions for vocabulary aliases:
+    python .claude/project-map/mine-sessions.py
+    python .claude/project-map/mine-sessions.py --verbose
+    python .claude/project-map/mine-sessions.py --dry-run
+
+  Re-install git hooks (if you cloned a fresh copy):
+    bash .githooks/install.sh
+
+  Re-run the full installer:
+    bash .claude/install.sh
+
+USING THE DEVELOPER SKILL
+  After install, invoke your project skill in Claude Code:
+
+    /babel-fish-developer    (or /<your-project-slug>-developer)
+
+  The skill reads PROJECT_MAP.md and loads only the 2-3 sections
+  relevant to your current task (typically 5-20KB of context).
+
+KEY FILES AFTER INSTALL
+  .claude/project-map/PROJECT_MAP.md        — Map index + quick routing
+  .claude/project-map/sections/01-*.md      — Vocabulary translator
+  .claude/project-map/sections/04-*.md      — API routes
+  .claude/project-map/sections/05-*.md      — Data models
+  .claude/project-map/reports/install-report.md — Quality report
+  .claude/rules/project-vocabulary.md       — Auto-loaded every session
+  .claude/rules/operational-runbook.md      — Edit manually to grow over time
+  .claude/skills/<slug>-developer-skill/    — Your developer skill
+  .githooks/pre-commit                      — Auto-regenerates map on commit
+
+GRADING CATEGORIES (90% to pass)
+  Section completeness  25%  — All 19 sections generated
+  Vocabulary accuracy   20%  — Entries map to real files
+  Import chain validity 15%  — Chains trace to real modules
+  Secret safety         15%  — No API keys or tokens leaked
+  Section size bounds   10%  — Each section 0.1-50KB
+  Structural integrity  10%  — Valid markdown, working TOC links
+  Checksum function      5%  — Re-run skips when nothing changed
+
+EXAMPLES
+  # Install on current directory
+  bash .claude/install.sh
+
+  # Install on a specific project
+  bash .claude/install.sh /mnt/e/my-project
+
+  # Force-regenerate after adding new routes
+  python .claude/project-map/generate.py --force
+
+  # Check map quality after a big refactor
+  python .claude/project-map/grader.py
+
+  # See what vocabulary aliases were learned from your sessions
+  python .claude/project-map/mine-sessions.py --dry-run --verbose
+
+HELP
+
+    exit 0
+fi
+
 # Resolve absolute path immediately
 PROJECT_ROOT="$(cd "${1:-$(pwd)}" && pwd)"
 CLAUDE_DIR="$PROJECT_ROOT/.claude"

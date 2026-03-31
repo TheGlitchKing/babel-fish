@@ -1,0 +1,111 @@
+{
+  "id": "codebase-mapper",
+  "name": "codebase-mapper",
+  "displayName": "Codebase Mapper",
+  "type": "claude-plugin",
+  "version": "1.0.0",
+  "description": "Auto-generates a project map, vocabulary translation layer, and developer skill for any codebase. Introspects routes, models, services, features, infrastructure, and session history to give Claude instant full-stack context. Self-updates via pre-commit hook. Iterative install with 90% quality threshold and human-readable grading reports.",
+  "author": {
+    "name": "TheGlitchKing",
+    "url": "https://github.com/TheGlitchKing"
+  },
+  "repository": {
+    "type": "github",
+    "owner": "TheGlitchKing",
+    "repo": "babel-fish",
+    "url": "https://github.com/TheGlitchKing/babel-fish"
+  },
+  "installation": {
+    "trigger": "bash .claude/install.sh",
+    "methods": [
+      {
+        "type": "claude-marketplace",
+        "command": "/plugin install TheGlitchKing/codebase-mapper"
+      },
+      {
+        "type": "manual",
+        "steps": [
+          "Clone or copy the plugin into your project's .claude/ directory",
+          "Run: bash .claude/install.sh",
+          "Optionally run: bash .githooks/install.sh to register the pre-commit hook"
+        ]
+      }
+    ],
+    "requirements": {
+      "claude-code": ">=1.0.0",
+      "python": ">=3.8",
+      "bash": true,
+      "optional": {
+        "pyyaml": "For YAML parsing in docker-compose files (falls back to regex)"
+      }
+    }
+  },
+  "category": "developer-tools",
+  "tags": [
+    "codebase-context",
+    "project-map",
+    "vocabulary",
+    "developer-skill",
+    "introspection",
+    "drift-management"
+  ],
+  "keywords": [
+    "project map",
+    "codebase mapper",
+    "vocabulary translation",
+    "developer context",
+    "code introspection",
+    "auto-generated docs",
+    "semantic drift",
+    "technical translator"
+  ],
+  "license": "MIT",
+  "status": "production-ready",
+  "features": {
+    "hooks": [
+      "pre-commit (auto-regenerate project map on source file changes)"
+    ],
+    "skills": [
+      "<project-slug>-developer-skill"
+    ],
+    "rules": [
+      "project-vocabulary.md (auto-loaded every session)",
+      "operational-runbook.md (auto-loaded every session)"
+    ],
+    "commands": [
+      "python .claude/project-map/generate.py --force",
+      "python .claude/project-map/grader.py"
+    ]
+  },
+  "quality": {
+    "install_grading": true,
+    "pass_threshold": 90,
+    "max_iterations": 3,
+    "grading_categories": [
+      "section_completeness",
+      "vocabulary_accuracy",
+      "import_chain_validity",
+      "secret_safety",
+      "section_size_bounds",
+      "structural_integrity",
+      "checksum_functionality"
+    ]
+  },
+  "supported_stacks": [
+    "python/fastapi",
+    "python/django",
+    "python/flask",
+    "typescript/nextjs",
+    "typescript/nestjs",
+    "javascript/express",
+    "javascript/react",
+    "go/gin",
+    "go/echo",
+    "go/chi",
+    "go/stdlib",
+    "java/spring-boot"
+  ],
+  "compatibility": {
+    "claude-code": ">=1.0.0"
+  }
+}
