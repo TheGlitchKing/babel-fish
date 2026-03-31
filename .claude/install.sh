@@ -137,6 +137,7 @@ fi
 
 # Resolve absolute path immediately
 PROJECT_ROOT="$(cd "${1:-$(pwd)}" && pwd)"
+PLUGIN_SOURCE_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 CLAUDE_DIR="$PROJECT_ROOT/.claude"
 MAP_DIR="$CLAUDE_DIR/project-map"
 REPORTS_DIR="$MAP_DIR/reports"
@@ -435,6 +436,18 @@ ${RESET}"
 info "Project root: $PROJECT_ROOT"
 info "Timestamp:    $(date '+%Y-%m-%d %H:%M:%S')"
 echo
+
+# ── Step 0: Bootstrap plugin files into target project ───────────────────────
+# When running from an external source (e.g. marketplace install), copy all
+# plugin scripts, templates, and python files into the target project's .claude/
+if [ "$PLUGIN_SOURCE_DIR" != "$CLAUDE_DIR" ]; then
+    mkdir -p "$CLAUDE_DIR/scripts" "$CLAUDE_DIR/templates" "$CLAUDE_DIR/project-map" "$CLAUDE_DIR/rules" "$CLAUDE_DIR/skills"
+    cp -r "$PLUGIN_SOURCE_DIR/scripts/." "$CLAUDE_DIR/scripts/"
+    cp -r "$PLUGIN_SOURCE_DIR/templates/." "$CLAUDE_DIR/templates/"
+    cp -r "$PLUGIN_SOURCE_DIR/project-map/generate.py" "$CLAUDE_DIR/project-map/" 2>/dev/null || true
+    cp -r "$PLUGIN_SOURCE_DIR/project-map/grader.py" "$CLAUDE_DIR/project-map/" 2>/dev/null || true
+    cp -r "$PLUGIN_SOURCE_DIR/project-map/mine-sessions.py" "$CLAUDE_DIR/project-map/" 2>/dev/null || true
+fi
 
 # ── Step 1: Ensure Python ─────────────────────────────────────────────────────
 banner "Step 1: Python"
