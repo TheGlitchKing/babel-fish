@@ -37,8 +37,11 @@ That's it. The installer:
 ### Install via Claude Marketplace
 
 ```
+/plugin marketplace add TheGlitchKing/glitch-kingdom-of-plugins
 /plugin install TheGlitchKing/babel-fish
 ```
+
+> **Note**: The first command registers the Glitch Kingdom marketplace with Claude Code. You only need to run it once — after that, `/plugin install` will find all Glitch Kingdom plugins.
 
 ### Project Map Structure
 
