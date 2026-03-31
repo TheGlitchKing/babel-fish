@@ -1,116 +1,117 @@
 # babel-fish
 
-**Technical-to-feature-level human translator with drift management.**
+**Gives Claude instant, accurate knowledge of every route, model, service, feature, and infrastructure element in your codebase.**
 
-Translates technical implementation details into human-readable feature descriptions while tracking and managing semantic drift over time.
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+[![Status: Production Ready](https://img.shields.io/badge/Status-Production%20Ready-green.svg)]()
+[![GitHub: TheGlitchKing/babel-fish](https://img.shields.io/badge/GitHub-TheGlitchKing%2Fbabel--fish-blue)](https://github.com/TheGlitchKing/babel-fish)
 
 ---
 
-## Babel Fish Plugin
+## What Does This Do?
 
-babel-fish ships with the **Babel Fish** plugin — a self-updating developer context system that gives any Claude Code session instant, accurate knowledge of every route, model, service, feature, and infrastructure element in a codebase, plus a vocabulary translation layer that maps how humans talk about features to exact file paths.
+Babel Fish auto-generates a living project map for your codebase and teaches Claude your vocabulary — so you spend zero time re-explaining your project every session.
 
-### What It Does
+| Without Babel Fish | With Babel Fish |
+|-------------------|-----------------|
+| "The deals page is at `features/deal-pipeline/DealPipeline.tsx`" | *Claude already knows* |
+| Claude scans 200 files to find a route | *Loads 1 section, 5KB* |
+| Stale context after a refactor | *Pre-commit hook auto-regenerates* |
+| Re-explain your stack every session | *Vocabulary auto-loaded on start* |
+| "Where is the background job for invoices?" | *Claude checks section 08 directly* |
 
-- **Project map**: Auto-generated index of routes, models, schemas, services, background jobs, frontend features, migrations, auth config, and infrastructure — split into 19 focused sections (2-50KB each) so Claude loads only what's needed per task
-- **Vocabulary translator**: Maps plain-English phrases to exact code locations (`"deal pipeline"` → `features/deal-pipeline/DealPipeline.tsx`)
-- **Learned vocabulary**: Mines past Claude Code sessions to discover aliases you use naturally, scoring by frequency × recency
-- **Operational runbook**: Auto-loaded every session — captures gotchas, deploy procedures, and environment differences that can't be derived from code
-- **Self-updating**: Pre-commit hook regenerates the map automatically whenever source files change
-- **Quality grading**: Install loop runs up to 3 iterations, grading output 0-100% across 7 categories. Must reach 90% to pass.
+**In short:** Claude knows your codebase cold from the first message.
 
-### Install
+---
+
+## What Gets Generated
+
+A 19-section project map, split into focused files so Claude loads only what's relevant per task:
+
+| Section | What It Contains |
+|---------|-----------------|
+| `01-vocabulary.md` | Plain-English → exact file path mapping |
+| `02-service-topology.md` | How your services connect |
+| `03-environment.md` | Env vars (secrets redacted) |
+| `04-api-routes.md` | Every route with method, path, handler |
+| `05-data-models.md` | Models and their fields |
+| `06-schemas.md` | Validation schemas (Pydantic, Zod, etc.) |
+| `07-services.md` | Business logic layer |
+| `08-background-jobs.md` | Queues, workers, cron tasks |
+| `09-frontend-features.md` | Components and pages |
+| `10-tools-commands.md` | CLI commands and scripts |
+| `11-migrations.md` | Database migration history |
+| `12-import-chains.md` | Key import dependency trees |
+| `13-frontend-backend-map.md` | Which frontend calls which API |
+| `14-reverse-proxy.md` | Nginx/Caddy routing config |
+| `15-auth-config.md` | Auth strategy and guards |
+| `16-infra-profile.md` | Docker, Terraform, cloud config |
+| `17-learned-vocabulary.md` | Aliases mined from your sessions |
+| `18-dead-code.md` | Unused exports and orphaned files |
+| `19-doc-pointers.md` | Links to external docs |
+
+Plus:
+- **`PROJECT_MAP.md`** — TOC and quick routing guide (always loaded first)
+- **`project-vocabulary.md`** — auto-loaded every session
+- **`operational-runbook.md`** — gotchas and deploy procedures, grows over time
+- **Developer skill** — loads only the 2-3 sections relevant to your current task
+
+---
+
+## Install
+
+### Option 1: Curl one-liner (easiest)
 
 ```bash
-bash .claude/install.sh
+curl -sSL https://raw.githubusercontent.com/TheGlitchKing/babel-fish/main/install.sh | bash
 ```
 
-That's it. The installer:
-1. Checks for Python ≥3.8 (installs if missing)
-2. Detects your stack (language, framework, database, ORM, auth, infra)
-3. Runs `generate.py` → grades with `grader.py` (iterates until 90%+ or 3 attempts)
-4. Renders your developer skill and rules files
-5. Installs the pre-commit hook
-6. Updates `CLAUDE.md`
-7. Prints a full quality report
+Run from inside the project you want to map. Clones the plugin to a temp dir, runs the installer, then cleans up.
 
-### Install via Claude Marketplace
+To target a specific path:
+```bash
+curl -sSL https://raw.githubusercontent.com/TheGlitchKing/babel-fish/main/install.sh | bash -s -- /path/to/your/project
+```
+
+---
+
+### Option 2: Via Glitch Kingdom Marketplace (Claude Code)
+
+Run these inside a Claude Code session:
 
 ```
 /plugin marketplace add TheGlitchKing/glitch-kingdom-of-plugins
 /plugin install TheGlitchKing/babel-fish
 ```
 
-> **Note**: The first command registers the Glitch Kingdom marketplace with Claude Code. You only need to run it once — after that, `/plugin install` will find all Glitch Kingdom plugins.
+> The first command registers the Glitch Kingdom marketplace. You only need to run it once — after that, `/plugin install` works for all Glitch Kingdom plugins.
 
-### Project Map Structure
+---
 
-```
-.claude/
-├── project-map/
-│   ├── generate.py              # Introspection script — run to regenerate
-│   ├── grader.py                # Quality grader — run to re-score
-│   ├── PROJECT_MAP.md           # TOC + stats + quick routing guide
-│   ├── sections/
-│   │   ├── 01-vocabulary.md     # Human language → code location
-│   │   ├── 02-service-topology.md
-│   │   ├── 03-environment.md
-│   │   ├── 04-api-routes.md
-│   │   ├── 05-data-models.md
-│   │   ├── 06-schemas.md
-│   │   ├── 07-services.md
-│   │   ├── 08-background-jobs.md
-│   │   ├── 09-frontend-features.md
-│   │   ├── 10-tools-commands.md
-│   │   ├── 11-migrations.md
-│   │   ├── 12-import-chains.md
-│   │   ├── 13-frontend-backend-map.md
-│   │   ├── 14-reverse-proxy.md
-│   │   ├── 15-auth-config.md
-│   │   ├── 16-infra-profile.md
-│   │   ├── 17-learned-vocabulary.md
-│   │   ├── 18-dead-code.md
-│   │   └── 19-doc-pointers.md
-│   ├── reports/
-│   │   └── install-report.md    # Quality report with per-iteration scores
-│   ├── checksums.json           # Input hash — skip regeneration if unchanged
-│   └── learned-vocabulary.json  # Session-mined aliases (persists across runs)
-├── rules/
-│   ├── project-vocabulary.md    # Auto-loaded every session
-│   └── operational-runbook.md   # Auto-loaded every session (edit manually)
-└── skills/
-    └── <project>-developer-skill/
-        └── SKILL.md
-.githooks/
-├── pre-commit                   # Auto-regenerates map on commit
-└── install.sh                   # Register hooks: bash .githooks/install.sh
-```
-
-### Using the Developer Skill
-
-After install, a skill is available for your project:
-
-```
-/<project-slug>-developer
-```
-
-The skill reads `PROJECT_MAP.md` and uses the Quick Routing table to load only the 2-3 sections relevant to your current task — typically 5-20KB of context instead of 100KB+.
-
-### Keeping the Map Current
-
-The pre-commit hook regenerates the map automatically. To force a manual regeneration:
+### Option 3: Clone and run
 
 ```bash
-python .claude/project-map/generate.py --force
+git clone https://github.com/TheGlitchKing/babel-fish.git
+bash babel-fish/.claude/install.sh /path/to/your/project
 ```
 
-To re-grade the current output:
+---
 
-```bash
-python .claude/project-map/grader.py
-```
+## What the Installer Does
 
-### Grading Criteria
+1. Checks for Python ≥ 3.8 (installs if missing)
+2. Detects your stack (language, framework, database, ORM, auth, infra)
+3. Runs `generate.py` → grades with `grader.py` (iterates up to 3× until 90%+ quality)
+4. Renders your developer skill and rules files
+5. Installs the pre-commit hook (auto-regenerates map on source file changes)
+6. Updates `CLAUDE.md` with a project map pointer
+7. Prints a full quality report
+
+---
+
+## Quality Grading
+
+Every install is graded 0–100% across 7 categories. Must score ≥ 90% to pass (up to 3 iterations):
 
 | Category | Weight | What It Checks |
 |----------|--------|----------------|
@@ -122,19 +123,41 @@ python .claude/project-map/grader.py
 | Structural integrity | 10% | Valid markdown, working TOC links |
 | Checksum functionality | 5% | Re-run skips when nothing changed |
 
-**Pass threshold: 90%**
+A full report is written to `.claude/project-map/reports/install-report.md`.
 
-### Operational Runbook
+---
 
-`.claude/rules/operational-runbook.md` is loaded every session and is meant to grow organically. When you encounter a non-obvious issue, the developer skill will prompt:
+## Using the Developer Skill
 
-> "This looks like operational knowledge worth documenting. Want me to add it to the runbook? (Y/n)"
+After install, a skill is available:
 
-Entries are short: symptom → cause → fix. This is the anti-drift mechanism — knowledge that can't be derived from code lives here.
+```
+/<your-project-slug>-developer
+```
 
-### Learned Vocabulary
+It reads `PROJECT_MAP.md` and uses the Quick Routing table to load only the 2-3 sections relevant to your current task — typically 5–20KB of context instead of 100KB+.
 
-Every Claude Code session is mined for vocabulary. When you say "the numbers page" and Claude opens `DealAnalyzerV2.tsx`, that alias is recorded with a score (frequency × recency). Aliases with a score ≥5 appear in `17-learned-vocabulary.md` and the vocabulary translator. Scores decay over time; aliases drop after 90 sessions of inactivity.
+---
+
+## Keeping the Map Current
+
+The pre-commit hook regenerates the map automatically whenever source files change. To force a manual regeneration:
+
+```bash
+python .claude/project-map/generate.py --force
+```
+
+To re-grade the current output:
+
+```bash
+python .claude/project-map/grader.py
+```
+
+---
+
+## Learned Vocabulary
+
+Every Claude Code session is mined for vocabulary. When you say "the numbers page" and Claude opens `DealAnalyzerV2.tsx`, that alias is recorded with a score (frequency × recency). Aliases with a score ≥ 5 appear in `17-learned-vocabulary.md` automatically.
 
 Run the miner manually:
 
@@ -142,7 +165,45 @@ Run the miner manually:
 python .claude/project-map/mine-sessions.py
 ```
 
-### Supported Stacks
+---
+
+## Operational Runbook
+
+`.claude/rules/operational-runbook.md` is loaded every session and grows over time. When you encounter a non-obvious operational issue, the developer skill prompts:
+
+> "This looks like operational knowledge worth documenting. Want me to add it to the runbook? (Y/n)"
+
+Entries follow a simple format: symptom → cause → fix. This is the anti-drift mechanism — knowledge that can't be derived from code lives here.
+
+---
+
+## File Structure
+
+```
+.claude/
+├── project-map/
+│   ├── generate.py              # Introspection script
+│   ├── grader.py                # Quality grader
+│   ├── mine-sessions.py         # Session vocabulary miner
+│   ├── PROJECT_MAP.md           # TOC + quick routing guide
+│   ├── sections/                # 19 focused section files
+│   ├── reports/                 # Install and iteration reports
+│   ├── checksums.json           # Skip regeneration if unchanged
+│   └── learned-vocabulary.json  # Persisted session aliases
+├── rules/
+│   ├── project-vocabulary.md    # Auto-loaded every session
+│   └── operational-runbook.md   # Auto-loaded every session
+└── skills/
+    └── <project>-developer-skill/
+        └── SKILL.md
+.githooks/
+├── pre-commit                   # Auto-regenerates map on commit
+└── install.sh                   # Register hooks: bash .githooks/install.sh
+```
+
+---
+
+## Supported Stacks
 
 | Language | Frameworks |
 |----------|-----------|
@@ -152,15 +213,33 @@ python .claude/project-map/mine-sessions.py
 | Java | Spring Boot |
 | Any | docker-compose, nginx, Caddy, Terraform, Prisma, SQLAlchemy, TypeORM |
 
-### Requirements
+---
 
-- Claude Code ≥1.0.0
-- Python ≥3.8 (auto-installed if missing)
-- bash
+## Requirements
+
+- Claude Code ≥ 1.0.0
+- Python ≥ 3.8 (auto-installed if missing)
+- Bash
 - Optional: `pip install pyyaml` for docker-compose YAML parsing (regex fallback included)
+
+---
+
+## Commands
+
+| Command | What It Does |
+|---------|-------------|
+| `python .claude/project-map/generate.py --force` | Force-regenerate project map |
+| `python .claude/project-map/grader.py` | Grade map quality (0–100%) |
+| `python .claude/project-map/mine-sessions.py` | Mine session vocabulary |
+| `bash .githooks/install.sh` | (Re)install git hooks |
+| `bash .claude/install.sh` | Re-run full plugin installer |
 
 ---
 
 ## License
 
 MIT — see [LICENSE](LICENSE)
+
+---
+
+**Made by [TheGlitchKing](https://github.com/TheGlitchKing)**
