@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-generate.py — Codebase Mapper
+generate.py — Babel Fish
 Stack-agnostic introspection script for the babel-fish codebase mapper plugin.
 Produces a split-section project map under .claude/project-map/sections/
 
@@ -1368,7 +1368,7 @@ def build_project_map(
 # ╚══════════════════════════════════════════════════════════════════════════╝
 
 def main() -> None:
-    parser = argparse.ArgumentParser(description='Codebase Mapper — generate project map')
+    parser = argparse.ArgumentParser(description='Babel Fish — generate project map')
     parser.add_argument('--force', action='store_true', help='Force regeneration even if checksums match')
     parser.add_argument('--project-root', type=Path, default=None, help='Override project root')
     parser.add_argument('--stack-json', type=Path, default=None, help='Path to stack.json from detect-stack.sh')

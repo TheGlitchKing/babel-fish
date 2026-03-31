@@ -1,7 +1,7 @@
 {
-  "id": "codebase-mapper",
-  "name": "codebase-mapper",
-  "displayName": "Codebase Mapper",
+  "id": "babel-fish",
+  "name": "babel-fish",
+  "displayName": "Babel Fish",
   "type": "claude-plugin",
   "version": "1.0.0",
   "description": "Auto-generates a project map, vocabulary translation layer, and developer skill for any codebase. Introspects routes, models, services, features, infrastructure, and session history to give Claude instant full-stack context. Self-updates via pre-commit hook. Iterative install with 90% quality threshold and human-readable grading reports.",
@@ -20,7 +20,7 @@
     "methods": [
       {
         "type": "claude-marketplace",
-        "command": "/plugin install TheGlitchKing/codebase-mapper"
+        "command": "/plugin install TheGlitchKing/babel-fish"
       },
       {
         "type": "manual",
@@ -51,7 +51,7 @@
   ],
   "keywords": [
     "project map",
-    "codebase mapper",
+    "babel fish",
     "vocabulary translation",
     "developer context",
     "code introspection",

@@ -6,9 +6,9 @@ Translates technical implementation details into human-readable feature descript
 
 ---
 
-## Codebase Mapper Plugin
+## Babel Fish Plugin
 
-babel-fish ships with the **Codebase Mapper** plugin — a self-updating developer context system that gives any Claude Code session instant, accurate knowledge of every route, model, service, feature, and infrastructure element in a codebase, plus a vocabulary translation layer that maps how humans talk about features to exact file paths.
+babel-fish ships with the **Babel Fish** plugin — a self-updating developer context system that gives any Claude Code session instant, accurate knowledge of every route, model, service, feature, and infrastructure element in a codebase, plus a vocabulary translation layer that maps how humans talk about features to exact file paths.
 
 ### What It Does
 
@@ -37,7 +37,7 @@ That's it. The installer:
 ### Install via Claude Marketplace
 
 ```
-/plugin install TheGlitchKing/codebase-mapper
+/plugin install TheGlitchKing/babel-fish
 ```
 
 ### Project Map Structure

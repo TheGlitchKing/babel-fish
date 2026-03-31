@@ -1,6 +1,6 @@
 #!/bin/bash
 # ============================================================
-# Codebase Mapper Plugin — Installer
+# Babel Fish Plugin — Installer
 # Triggered automatically on plugin installation.
 #
 # What this does:
@@ -22,7 +22,7 @@ if [[ "${1:-}" == "--help" || "${1:-}" == "-h" ]]; then
     cat <<'HELP'
 
   ╔══════════════════════════════════════════════════════════════════╗
-  ║              Codebase Mapper Plugin — Help                       ║
+  ║              Babel Fish Plugin — Help                       ║
   ╚══════════════════════════════════════════════════════════════════╝
 
 WHAT IT DOES
@@ -51,7 +51,7 @@ INSTALLATION
 
   Via the Claude Marketplace:
 
-    /plugin install TheGlitchKing/codebase-mapper
+    /plugin install TheGlitchKing/babel-fish
 
 WHAT HAPPENS ON INSTALL
   1. Python >= 3.8 is checked and installed if missing
@@ -427,7 +427,7 @@ clear
 printf '%b\n' "
 ${CYAN}${BOLD}
   ╔══════════════════════════════════════════╗
-  ║     Codebase Mapper Plugin Installer     ║
+  ║     Babel Fish Plugin Installer     ║
   ║     by TheGlitchKing                     ║
   ╚══════════════════════════════════════════╝
 ${RESET}"
