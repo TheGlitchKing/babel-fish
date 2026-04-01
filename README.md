@@ -62,22 +62,41 @@ Plus:
 
 ## Install
 
-### Option 1: Curl one-liner (easiest)
+### Option 1: npx (recommended — no curl, verified by npm registry)
 
 ```bash
-curl -sSL https://raw.githubusercontent.com/TheGlitchKing/babel-fish/main/install.sh | bash
-```
+# Preview all changes before applying (nothing is modified)
+npx @theglitchking/babel-fish dry-run
 
-Run from inside the project you want to map. Clones the plugin to a temp dir, runs the installer, then cleans up.
+# Install
+npx @theglitchking/babel-fish init
 
-To target a specific path:
-```bash
-curl -sSL https://raw.githubusercontent.com/TheGlitchKing/babel-fish/main/install.sh | bash -s -- /path/to/your/project
+# Or target a specific project
+npx @theglitchking/babel-fish init /path/to/your/project
 ```
 
 ---
 
-### Option 2: Via Glitch Kingdom Marketplace (Claude Code)
+### Option 2: Curl one-liner (checksum-verified)
+
+Always preview before running anything from the internet:
+
+```bash
+# Preview first — shows every file that will be created, nothing is modified
+curl -sSL https://raw.githubusercontent.com/TheGlitchKing/babel-fish/main/install.sh | bash -s -- --dry-run
+
+# Install
+curl -sSL https://raw.githubusercontent.com/TheGlitchKing/babel-fish/main/install.sh | bash
+
+# Or target a specific path
+curl -sSL https://raw.githubusercontent.com/TheGlitchKing/babel-fish/main/install.sh | bash -s -- /path/to/your/project
+```
+
+The remote installer verifies a SHA256 checksum against `checksums.json` before executing anything. If the file has been tampered with in transit, the installer aborts.
+
+---
+
+### Option 3: Via Glitch Kingdom Marketplace (Claude Code)
 
 Run these inside a Claude Code session:
 
@@ -90,10 +109,11 @@ Run these inside a Claude Code session:
 
 ---
 
-### Option 3: Clone and run
+### Option 4: Clone and run
 
 ```bash
 git clone https://github.com/TheGlitchKing/babel-fish.git
+bash babel-fish/.claude/install.sh --dry-run /path/to/your/project  # preview first
 bash babel-fish/.claude/install.sh /path/to/your/project
 ```
 

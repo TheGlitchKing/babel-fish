@@ -41,7 +41,11 @@ REQUIREMENTS
   - Optional: pip install pyyaml  (for docker-compose parsing)
 
 INSTALLATION
-  Run this from your project root:
+  Preview all changes first (nothing is modified):
+
+    bash .claude/install.sh --dry-run
+
+  Run the installer:
 
     bash .claude/install.sh
 
@@ -49,8 +53,22 @@ INSTALLATION
 
     bash .claude/install.sh /path/to/your/project
 
-  Via the Claude Marketplace:
+  One-liner from the internet (checksum-verified):
 
+    curl -sSL https://raw.githubusercontent.com/TheGlitchKing/babel-fish/main/install.sh | bash
+
+  Preview before running remotely:
+
+    curl -sSL https://raw.githubusercontent.com/TheGlitchKing/babel-fish/main/install.sh | bash -s -- --dry-run
+
+  Via npm (no curl needed):
+
+    npx @theglitchking/babel-fish dry-run
+    npx @theglitchking/babel-fish init
+
+  Via the Glitch Kingdom Marketplace in Claude Code:
+
+    /plugin marketplace add TheGlitchKing/glitch-kingdom-of-plugins
     /plugin install TheGlitchKing/babel-fish
 
 WHAT HAPPENS ON INSTALL
@@ -135,8 +153,19 @@ HELP
     exit 0
 fi
 
+# ── Argument parsing ─────────────────────────────────────────────────────────
+DRY_RUN=false
+POSITIONAL=""
+for arg in "$@"; do
+    case "$arg" in
+        --dry-run) DRY_RUN=true ;;
+        -*) ;;  # ignore unknown flags
+        *) POSITIONAL="$arg" ;;
+    esac
+done
+
 # Resolve absolute path immediately
-PROJECT_ROOT="$(cd "${1:-$(pwd)}" && pwd)"
+PROJECT_ROOT="$(cd "${POSITIONAL:-$(pwd)}" && pwd)"
 PLUGIN_SOURCE_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 CLAUDE_DIR="$PROJECT_ROOT/.claude"
 MAP_DIR="$CLAUDE_DIR/project-map"
@@ -147,6 +176,9 @@ TEMPLATES_DIR="$CLAUDE_DIR/templates"
 MAX_ITERATIONS=3
 PASS_THRESHOLD=90
 PREVIOUS_SCORE=""
+
+# Dry-run helper — prints the action instead of doing it
+_dry() { printf '%b\n' "${YELLOW}  [dry-run] $*${RESET}"; }
 
 # ── Colors ───────────────────────────────────────────────────────────────────
 CYAN='\033[36m'; GREEN='\033[32m'; YELLOW='\033[33m'; RED='\033[31m'
@@ -436,6 +468,40 @@ ${RESET}"
 info "Project root: $PROJECT_ROOT"
 info "Timestamp:    $(date '+%Y-%m-%d %H:%M:%S')"
 echo
+
+# ── Dry-run preview ──────────────────────────────────────────────────────────
+if $DRY_RUN; then
+    printf '%b\n' "${YELLOW}${BOLD}  DRY RUN — nothing will be created or modified${RESET}"
+    echo
+    printf '%b\n' "${CYAN}${BOLD}  Files this installer will create:${RESET}"
+    _dry "mkdir -p $CLAUDE_DIR/scripts"
+    _dry "mkdir -p $CLAUDE_DIR/templates"
+    _dry "mkdir -p $CLAUDE_DIR/project-map/sections"
+    _dry "mkdir -p $CLAUDE_DIR/project-map/reports"
+    _dry "mkdir -p $CLAUDE_DIR/rules"
+    _dry "mkdir -p $CLAUDE_DIR/skills/<project>-developer-skill/"
+    _dry "copy  scripts/*.sh         → $CLAUDE_DIR/scripts/"
+    _dry "copy  templates/*.template → $CLAUDE_DIR/templates/"
+    _dry "copy  project-map/*.py     → $CLAUDE_DIR/project-map/"
+    _dry "write $CLAUDE_DIR/project-map/PROJECT_MAP.md"
+    _dry "write $CLAUDE_DIR/project-map/sections/01-vocabulary.md  (+ 18 more sections)"
+    _dry "write $CLAUDE_DIR/project-map/reports/install-report.md"
+    _dry "write $CLAUDE_DIR/rules/project-vocabulary.md"
+    _dry "write $CLAUDE_DIR/rules/operational-runbook.md"
+    _dry "write $CLAUDE_DIR/skills/<project>-developer-skill/SKILL.md"
+    _dry "write .githooks/pre-commit"
+    _dry "run   git config core.hooksPath .githooks"
+    _dry "write/update CLAUDE.md  (appends project map pointer)"
+    echo
+    printf '%b\n' "${CYAN}${BOLD}  What the installer will NOT do:${RESET}"
+    _dry "  — will not modify any of your source files"
+    _dry "  — will not install packages globally"
+    _dry "  — will not make network requests (except git clone if run via curl)"
+    _dry "  — will not run Python with elevated permissions"
+    echo
+    printf '%b\n' "${GREEN}  Run without --dry-run to apply.${RESET}"
+    exit 0
+fi
 
 # ── Step 0: Bootstrap plugin files into target project ───────────────────────
 # When running from an external source (e.g. marketplace install), copy all

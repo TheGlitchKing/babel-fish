@@ -1,0 +1,39 @@
+{
+  "name": "@theglitchking/babel-fish",
+  "version": "1.0.0",
+  "description": "Gives Claude instant, accurate knowledge of every route, model, service, feature, and infrastructure element in your codebase.",
+  "bin": {
+    "babel-fish": "./bin/babel-fish.js"
+  },
+  "scripts": {
+    "postinstall": "node bin/babel-fish.js init --auto"
+  },
+  "files": [
+    "bin/",
+    ".claude/",
+    "install.sh",
+    "checksums.json",
+    "LICENSE",
+    "README.md"
+  ],
+  "keywords": [
+    "claude",
+    "claude-code",
+    "codebase-context",
+    "project-map",
+    "vocabulary",
+    "developer-skill",
+    "ai",
+    "llm"
+  ],
+  "author": "TheGlitchKing",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/TheGlitchKing/babel-fish.git"
+  },
+  "homepage": "https://github.com/TheGlitchKing/babel-fish",
+  "engines": {
+    "node": ">=16.0.0"
+  }
+}
