@@ -12,7 +12,7 @@
 
 ## What Does This Do?
 
-Babel Fish auto-generates a living project map for your codebase and teaches Claude your vocabulary — so you spend zero time re-explaining your project every session.
+Babel fish creates a translation layer betwen a human and an LLM. This effectivley provides a natural 'feature' based conversation for the human, and a direct mapping to tools / targets / models / etc.. for the LLM. Babel Fish auto-generates a living project map for your codebase and teaches Claude your vocabulary — so you spend zero time re-explaining your project every session.
 
 | Without Babel Fish | With Babel Fish |
 |-------------------|-----------------|
