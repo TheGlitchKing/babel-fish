@@ -1,5 +1,7 @@
 # babel-fish
 
+![babel-fish](babel.jpg)
+
 **Gives Claude instant, accurate knowledge of every route, model, service, feature, and infrastructure element in your codebase.**
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
