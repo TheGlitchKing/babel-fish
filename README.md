@@ -2,7 +2,7 @@
 
 ![babel-fish](babel.jpg)
 
-**Gives Claude instant, accurate knowledge of every route, model, service, feature, and infrastructure element in your codebase.**
+**Gives your AI coding assistant instant, accurate knowledge of every route, model, service, feature, and infrastructure element in your codebase.**
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![Status: Production Ready](https://img.shields.io/badge/Status-Production%20Ready-green.svg)]()
@@ -12,23 +12,23 @@
 
 ## What Does This Do?
 
-Babel fish creates a translation layer betwen a human and an LLM. This effectivley provides a natural 'feature' based conversation for the human, and a direct mapping to tools / targets / models / etc.. for the LLM. Babel Fish auto-generates a living project map for your codebase and teaches Claude your vocabulary — so you spend zero time re-explaining your project every session.
+Babel Fish creates a translation layer between a human and an LLM. It provides a natural feature-based conversation for the human, and a direct mapping to tools, targets, models, and file paths for the AI. Babel Fish auto-generates a living project map for your codebase and teaches your AI assistant your vocabulary — so you spend zero time re-explaining your project every session.
 
 | Without Babel Fish | With Babel Fish |
 |-------------------|-----------------|
-| "The deals page is at `features/deal-pipeline/DealPipeline.tsx`" | *Claude already knows* |
-| Claude scans 200 files to find a route | *Loads 1 section, 5KB* |
+| "The deals page is at `features/deal-pipeline/DealPipeline.tsx`" | *Already mapped* |
+| AI scans 200 files to find a route | *Loads 1 section, 5KB* |
 | Stale context after a refactor | *Pre-commit hook auto-regenerates* |
 | Re-explain your stack every session | *Vocabulary auto-loaded on start* |
-| "Where is the background job for invoices?" | *Claude checks section 08 directly* |
+| "Where is the background job for invoices?" | *Checks section 08 directly* |
 
-**In short:** Claude knows your codebase cold from the first message.
+**In short:** Your AI assistant knows your codebase cold from the first message.
 
 ---
 
 ## What Gets Generated
 
-A 19-section project map, split into focused files so Claude loads only what's relevant per task:
+A 19-section project map, split into focused files so the AI loads only what's relevant per task:
 
 | Section | What It Contains |
 |---------|-----------------|
@@ -179,7 +179,7 @@ python .claude/project-map/grader.py
 
 ## Learned Vocabulary
 
-Every Claude Code session is mined for vocabulary. When you say "the numbers page" and Claude opens `DealAnalyzerV2.tsx`, that alias is recorded with a score (frequency × recency). Aliases with a score ≥ 5 appear in `17-learned-vocabulary.md` automatically.
+Every AI session is mined for vocabulary. When you say "the numbers page" and the AI opens `DealAnalyzerV2.tsx`, that alias is recorded with a score (frequency × recency). Aliases with a score ≥ 5 appear in `17-learned-vocabulary.md` automatically.
 
 Run the miner manually:
 
@@ -239,7 +239,7 @@ Entries follow a simple format: symptom → cause → fix. This is the anti-drif
 
 ## Requirements
 
-- Claude Code ≥ 1.0.0
+- AI coding assistant (Claude Code, Cursor, or compatible)
 - Python ≥ 3.8 (auto-installed if missing)
 - Bash
 - Optional: `pip install pyyaml` for docker-compose YAML parsing (regex fallback included)

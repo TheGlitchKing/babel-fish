@@ -10,7 +10,7 @@ const args = process.argv.slice(2);
 const command = args[0] || 'init';
 
 const helpText = `
-  babel-fish — gives Claude instant codebase context
+  babel-fish — gives your AI assistant instant codebase context
 
   Usage:
     npx @theglitchking/babel-fish [command] [options]
