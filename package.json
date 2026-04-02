@@ -1,5 +1,5 @@
 {
-  "name": "ibabel-fish",
+  "name": "@the-glitch-king/babel-fish",
   "version": "1.0.0",
   "description": "Gives your AI coding assistant instant, accurate knowledge of every route, model, service, feature, and infrastructure element in your codebase.",
   "bin": {
