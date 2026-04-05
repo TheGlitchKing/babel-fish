@@ -409,7 +409,7 @@ INSTALL
 _update_claude_md() {
     local project_root="$1"
     local name="$2"
-    local claude_md="$project_root/CLAUDE.md"
+    local claude_md="$project_root/.claude/CLAUDE.md"
 
     if [ -f "$claude_md" ] && grep -q 'Project Map' "$claude_md" 2>/dev/null; then
         ok "CLAUDE.md already has Project Map section"
