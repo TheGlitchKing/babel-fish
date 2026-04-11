@@ -1,0 +1,44 @@
+{
+  "name": "babel-fish-marketplace",
+  "owner": {
+    "name": "TheGlitchKing",
+    "email": "theglitchking@users.noreply.github.com"
+  },
+  "metadata": {
+    "description": "Official marketplace for babel-fish - Codebase introspection and vocabulary translation for AI coding assistants",
+    "version": "1.0.1"
+  },
+  "plugins": [
+    {
+      "name": "babel-fish",
+      "description": "Auto-generates a project map, vocabulary translation layer, and developer skill for any codebase. Introspects routes, models, services, features, infrastructure, and session history to give Claude instant full-stack context. Self-updates via pre-commit hook.",
+      "version": "1.0.1",
+      "author": {
+        "name": "TheGlitchKing"
+      },
+      "homepage": "https://github.com/TheGlitchKing/babel-fish",
+      "repository": "https://github.com/TheGlitchKing/babel-fish.git",
+      "license": "MIT",
+      "keywords": [
+        "codebase-context",
+        "project-map",
+        "vocabulary",
+        "developer-skill",
+        "introspection",
+        "drift-management",
+        "claude-code"
+      ],
+      "category": "developer-tools",
+      "tags": [
+        "codebase-context",
+        "introspection",
+        "project-map"
+      ],
+      "source": {
+        "source": "npm",
+        "package": "@theglitchking/babel-fish"
+      },
+      "strict": true
+    }
+  ]
+}

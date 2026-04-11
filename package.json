@@ -1,6 +1,6 @@
 {
-  "name": "@the-glitch-king/babel-fish",
-  "version": "1.0.0",
+  "name": "@theglitchking/babel-fish",
+  "version": "1.0.1",
   "description": "Gives your AI coding assistant instant, accurate knowledge of every route, model, service, feature, and infrastructure element in your codebase.",
   "bin": {
     "babel-fish": "bin/babel-fish.js"
@@ -10,7 +10,8 @@
   },
   "files": [
     "bin/",
-    ".claude/",
+    ".claude-plugin/",
+    "skills/",
     "install.sh",
     "checksums.json",
     "LICENSE",
@@ -33,6 +34,9 @@
     "url": "https://github.com/TheGlitchKing/babel-fish.git"
   },
   "homepage": "https://github.com/TheGlitchKing/babel-fish",
+  "publishConfig": {
+    "access": "public"
+  },
   "engines": {
     "node": ">=16.0.0"
   }
