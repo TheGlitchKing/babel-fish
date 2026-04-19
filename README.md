@@ -119,6 +119,24 @@ bash babel-fish/.claude/install.sh /path/to/your/project
 
 ---
 
+## Update management *(2.0.0+)*
+
+Every install ships with an update policy controlling what happens at session start when a newer version is available on npm. Default is `nudge` (one-liner notification, no automatic changes).
+
+```bash
+babel-fish status          # installed / latest / policy / hook state
+babel-fish policy auto     # auto-update on session start
+babel-fish policy nudge    # one-liner nudge only (default)
+babel-fish policy off      # silent
+babel-fish update          # update now
+```
+
+Slash-command parity: `/babel-fish:status`, `/babel-fish:policy <mode>`, `/babel-fish:update`, `/babel-fish:relink`.
+
+See [CHANGELOG.md](./CHANGELOG.md) for the full 2.0.0 release notes, breaking-change details, and env-var opt-outs.
+
+---
+
 ## What the Installer Does
 
 1. Checks for Python ≥ 3.8 (installs if missing)

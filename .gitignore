@@ -1,0 +1,4 @@
+node_modules/
+*.tgz
+.claude/.babel-fish-update-cache.json
+package-lock.json
