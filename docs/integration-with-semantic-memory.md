@@ -170,7 +170,7 @@ No. Each project has its own `.babel-fish/` directory. Glossaries are per-projec
 ## See also
 
 - [`docs/glossary-contract.md`](./glossary-contract.md) — the data contract specification
-- [`docs/translation-verbs.md`](./translation-verbs.md) — full reference for the three MCP verbs (TBD — separate doc)
+- `docs/translation-verbs.md` — full reference for the three MCP verbs (TBD — separate doc, not yet written)
 - [semantic-memory `corpora.json` reference](https://github.com/TheGlitchKing/semantic-sidekick/blob/main/docs/corpora-json.md)
 - [semantic-memory smart-middle activation](https://github.com/TheGlitchKing/semantic-sidekick/blob/main/docs/smart-middle-activation.md)
 - [Compat matrix](https://github.com/TheGlitchKing/semantic-sidekick/blob/main/docs/compat-matrix.md) — pinned version pairs
