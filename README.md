@@ -8,6 +8,9 @@
 [![Status: Production Ready](https://img.shields.io/badge/Status-Production%20Ready-green.svg)]()
 [![GitHub: TheGlitchKing/babel-fish](https://img.shields.io/badge/GitHub-TheGlitchKing%2Fbabel--fish-blue)](https://github.com/TheGlitchKing/babel-fish)
 
+> [!NOTE]
+> **Pairs with [`semantic-memory`](https://github.com/TheGlitchKing/semantic-sidekick) (formerly `semantic-sidekick`).** When both are installed, semantic-memory consumes babel-fish's auto-generated `.babel-fish/` output as a `project-map` corpus AND extracts `01-vocabulary.md` into a structured `glossary.json` side-channel. That gives your AI a deterministic `translate("deals page") → "features/deal-pipeline/DealPipeline.tsx"` MCP verb instead of relying on semantic-search-luck. See [`docs/glossary-contract.md`](./docs/glossary-contract.md) for the producer/consumer data contract and [`docs/integration-with-semantic-memory.md`](./docs/integration-with-semantic-memory.md) for the setup walkthrough. babel-fish standalone behavior is unchanged — semantic-memory is purely additive.
+
 ---
 
 ## What Does This Do?
