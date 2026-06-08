@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file.
 
+## [2.0.2] - 2026-06-08
+
+### Fixed
+
+- Internal lint cleanup in `generate.py`: removed an unused `os` import and
+  two unused local variables, and dropped the `f` prefix from five
+  placeholder-less f-strings (ruff F401/F841/F541). No behavior change.
+
 ## [2.0.1] - 2026-06-08
 
 ### Fixed
