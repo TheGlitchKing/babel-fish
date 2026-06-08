@@ -603,19 +603,32 @@ class FrontendScanner:
     FEATURE_DIRS = {'features', 'pages', 'views', 'screens', 'modules', 'app'}
     COMPONENT_EXTS = {'.tsx', '.jsx'}
     HOOK_PATTERN = re.compile(r'^use[A-Z]')
+    # Candidate bases to search for the FEATURE_DIRS, relative to PROJECT_ROOT.
+    # Covers repo-root and src/ layouts plus monorepos where the frontend is a
+    # subpackage (e.g. frontend/src/features), not just at the repo root.
+    SEARCH_PREFIXES = ('', 'src', 'frontend', 'frontend/src',
+                       'web', 'web/src', 'client', 'client/src', 'ui', 'ui/src')
 
     def scan(self) -> list[dict]:
-        features = []
-        for feat_dir_name in self.FEATURE_DIRS:
-            feat_dir = PROJECT_ROOT / feat_dir_name
-            if not feat_dir.exists():
-                # try nested src/
-                feat_dir = PROJECT_ROOT / 'src' / feat_dir_name
-            if not feat_dir.is_dir():
-                continue
-            for entry in sorted(feat_dir.iterdir()):
-                if entry.is_dir() and not entry.name.startswith('.'):
+        features, seen = [], set()
+        for prefix in self.SEARCH_PREFIXES:
+            base = PROJECT_ROOT / prefix if prefix else PROJECT_ROOT
+            for feat_dir_name in self.FEATURE_DIRS:
+                feat_dir = base / feat_dir_name
+                if not feat_dir.is_dir():
+                    continue
+                for entry in sorted(feat_dir.iterdir()):
+                    if not (entry.is_dir() and not entry.name.startswith('.')):
+                        continue
+                    rp = entry.resolve()
+                    if rp in seen:
+                        continue  # already counted via another prefix
                     stats = self._scan_feature_dir(entry)
+                    # Only emit dirs that actually contain frontend components, so a
+                    # backend package named e.g. 'app/' is not misread as a feature.
+                    if stats['component_count'] + stats['hook_count'] == 0:
+                        continue
+                    seen.add(rp)
                     stats['name'] = entry.name
                     stats['path'] = str(entry.relative_to(PROJECT_ROOT))
                     features.append(stats)

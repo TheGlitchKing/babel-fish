@@ -2,6 +2,22 @@
 
 All notable changes to this project will be documented in this file.
 
+## [2.0.1] - 2026-06-08
+
+### Fixed
+
+- **Frontend feature scanner now detects monorepo layouts.** `FrontendScanner`
+  previously looked for `features/`, `pages/`, `views/`, etc. only at the repo
+  root or under a top-level `src/`. Projects that keep the frontend in a
+  subpackage (e.g. `frontend/src/features/`, the common React/Vite plus Python
+  backend split) were reported as "No frontend feature directories detected,"
+  leaving project-map sections 09 (Frontend Features) and 13 (Frontend to
+  Backend Map) empty. The scanner now searches `frontend/`, `web/`, `client/`,
+  and `ui/` (each with an optional `src/`) in addition to the repo root and
+  `src/`, dedupes by resolved path, and only emits directories that actually
+  contain `.jsx`/`.tsx` files so a backend package named `app/` is not
+  misclassified as a frontend feature.
+
 ## [2.0.0] — 2026-04-19
 
 ### Breaking changes
