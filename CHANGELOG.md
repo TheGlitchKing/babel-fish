@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file.
 
+## [2.0.3] - 2026-06-08
+
+### Fixed
+
+- Release-metadata consistency: the 2.0.2 npm payload shipped with
+  `.claude-plugin/plugin.json` still at version 2.0.0 (the manifest bump landed
+  after the 2.0.2 publish), so Claude Code read the installed plugin as 2.0.0
+  and `claude plugin update` never advanced. 2.0.3 bumps `package.json`,
+  `.claude-plugin/plugin.json`, and `.claude-plugin/marketplace.json` together
+  before publishing so the plugin version resolves correctly. No code change
+  from 2.0.2.
+
 ## [2.0.2] - 2026-06-08
 
 ### Fixed
